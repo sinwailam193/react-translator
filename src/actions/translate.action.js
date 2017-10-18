@@ -13,3 +13,16 @@ export const getLangs = () => async (dispatch, getState, api) => {
     }).then(res => (res.data && res.data.langs ? res.data.langs : {}));
     dispatch(changeState({ langs }));
 };
+
+export const getTranslation = data => async (dispatch, getState, api) => {
+    const { selectedLang } = getState().translate;
+    dispatch(changeState({ loading: true }));
+    const translation = await api.get("/translate", {
+        params: {
+            key: YANDEX_KEY,
+            lang: `en-${selectedLang || "en"}`,
+            text: data || ""
+        }
+    }).then(res => (res.data && res.data.text.length ? res.data.text[0] : ""));
+    dispatch(changeState({ translation, loading: false }));
+}
