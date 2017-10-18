@@ -7,12 +7,13 @@ import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 import axios from "axios";
 import App from './components/app';
 import reducers from "./reducers";
+import { YANDEX_API } from "./config";
 import registerServiceWorker from './registerServiceWorker';
 import './style/index.css';
 
 
 const axiosInstance = axios.create({
-    baseURL: "/api"
+    baseURL: YANDEX_API
 });
 
 const store = createStore(
